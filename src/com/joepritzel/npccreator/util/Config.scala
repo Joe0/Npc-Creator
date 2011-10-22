@@ -3,6 +3,7 @@ import java.io.File
 
 object Config {
   lazy val DATA_FOLDER = "data" + File.separator
+  lazy val OUTPUT_FOLDER = "output" + File.separator
   lazy val SERVER = "server" + File.separator
   lazy val DEFS = "defs" + File.separator
   lazy val STAT_NAMES = List("attack", "strength", "hits", "defense")
