@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Npc-Creator" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="Npc-Creator" default="build" xmlns:ivy="antlib:org.apache.ivy.ant" basedir=".">
 	<property name="src" location="src" />
 	<property name="bin" location="bin" />
-	<property name="lib" location="lib_managed" />
+	<property name="lib" value="lib_managed" />
 	<property name="doc" location="doc" />
-	<property name="jar" value="moparclassic.jar" />
+	<property name="jar" value="NpcCreator.jar" />
 	<property name="main-class" value="com.joepritzel.npccreator.NpcCreator" />
 	<property name="scala-version" value="2.9.1" />
 	<property name="ivy.lib.dir" value="lib_managed" />
@@ -77,6 +77,30 @@
 			<fileset refid="production-classes" />
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="jar no libs" depends="build">
+
+		<pathconvert property="libs.dir" pathsep=" ">
+			<mapper>
+				<chainedmapper>
+					<flattenmapper />
+					<globmapper from="*" to="${lib}/*" />
+				</chainedmapper>
+			</mapper>
+			<path>
+				<fileset dir="${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</path>
+		</pathconvert>
+
+		<jar destfile="${jar}">
+			<fileset refid="production-classes" />
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="${libs.dir}" />
 			</manifest>
 		</jar>
 	</target>
